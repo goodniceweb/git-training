@@ -35,6 +35,32 @@ class Parser
                 "Optional file text") do |text|
         options[:text] = text
       end
+      parser.on("-h", "--help",
+                "Prints help message") do |help|
+        options[:text] = <<-TEXT
+
+  ruby make_commit.rb <args>
+
+  Usage:
+
+    -f, --filename FILE_NAME
+    Optional file name for creating new commit
+
+    -e, --extension FILE_EXTENSION
+    Optional file extension for creating new commit
+
+    -d, --directory DIRECTORY
+    Optional directory for creating new commit
+
+    -n, --number COMMIT_NUMBER
+    Number of commits you want to create
+
+    -t, --text FILE_NAME
+    Optional file text
+
+        TEXT
+        options[:action] = :print_help
+      end
     end.parse!
 
     # Default values
@@ -53,7 +79,8 @@ class Parser
       options[:file_ext],
       options[:directory],
       options[:number],
-      options[:text]
+      options[:text],
+      options[:action]
     ]
   end
 end
